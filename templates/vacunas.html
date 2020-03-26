@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vacunas</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<form action="/vacunas/add">
+		<div class="form-inline">
+			<label>Vacunas</label>
+			<button type="submit" class="btn btn-default">Nueva</button>
+		</div>
+	</form>
+	<table class="table table-hover" id="myTable">
+    <thead>
+      <tr>
+        <th>Enfermedad</th>
+        <th>Fec. Registro</th>
+        <th>Pacientes</th>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for vacunas in vac %}
+        <tr>
+          <td>{{ vacunas['nombre_enfermedad'] }}</td>
+          <td>{{ vacunas['fecha_ingreso'] }}</td>
+          <td><a href="">Ver</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</div>
+</body>
+</html>
