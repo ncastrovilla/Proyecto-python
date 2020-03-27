@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flask vacunatorio</title>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<br>
+		<h2 align="center">Vacunar Paciente</h2>
+		<br>
+		<form class="form-horizontal" action="/pacientes/vacunar" method="post">
+			{% for pavac in vacp %}
+  			<div class="form-group"  align="center">
+    			<label class="control-label col-sm-2" for="name">Nombre paciente</label>
+    			<div class="col-sm-3" align="center">
+      				<label class="control-label col-sm-10">{{pavac['nombre_paciente']}}</label>
+    			</div>
+  			</div>
+  			<div class="form-group" align="center">
+    			<label class="control-label col-sm-2" for="run">RUN</label>
+    			<div class="col-sm-3" align="center">
+      				<label class="control-label col-sm-10">{{pavac['rut']}}</label>
+    			</div>
+  			</div>
+  			<div class="form-group" align="center">
+    			<label class="control-label col-sm-2" for="nac.">Fecha Nacimiento</label>
+    			<div class="col-sm-3" align="center">
+    				<label class="control-label col-sm-10">{{pavac['fecha_nacimiento']}}</label>
+    			</div>
+  			</div>
+  			<div class="form-group">
+  				<label class="control-label col-sm-2" for="vacuna">Vacuna</label>
+  				<select name="vacunas" id="vacunas">
+  					{% for vacunas in vaco %}
+  					<option value="{{vacunas['id']}}">{{vacunas['nombre_enfermedad']}}</option>
+  					{% endfor %}
+  				</select>
+  			</div>
+  			<div class="form-group">
+    			<div class="col-sm-offset-2 col-sm-10">
+    				<input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
+      				<button type="submit" class="btn btn-default">Guardar</button>
+    			</div>
+  			</div>
+  			{% endfor %}
+		</form> 
+	</div>
+</body>
+</html>

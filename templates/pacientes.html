@@ -37,7 +37,7 @@
           <td>{{ paciente['nombre_paciente'] }}</td>
           <td>{{ paciente['rut'] }}</td>
           <td>{{ paciente['fecha_nacimiento'] }}</td>
-          <td><a href="/vacunarpaciente">Agregar</a>
+          <td><a href="/pacientes/vacunar?id={{paciente['id']}}">Agregar</a>
           <a href="/vacunapaciente">Ver</a></td>
         </tr>
         {% endfor %}
