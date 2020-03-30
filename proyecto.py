@@ -77,8 +77,11 @@ def pvac():
 	if request.method == "GET":
 		idp = request.args.get('id', default = "", type = str)
 
-	select="SELECT * FROM Paciente"
-	select+= " WHERE id = %s"
+	if request.method == "POST":
+		idp = request.form['id']
+
+	select = "SELECT * FROM Paciente"
+	select += " WHERE id = %s"
 
 	cursor.execute(select,(idp))
 
@@ -90,12 +93,34 @@ def pvac():
 
 	return render_template('vacunarpaciente.html', vacp= pacivac, vaco=vac)
 
-@app.route('/vacunas/pacientes')
+@app.route('/pacientes/vacunar/listo', methods=["GET","POST"])
+def pvl():
+	cursor = mysql.get_db().cursor()
+
+	if request.method == "GET":
+		idp = request.args.get('idp', default = "", type = str)
+		vac = request.args.get('vacunas', default="",type = int)
+
+	if request.method == "POST":
+		idp = request.form['idp']
+		vac = request.form['vacunas']
+
+	sql = "INSERT INTO recibe (id,idpaciente,idvacuna)"
+	sql += " VALUES(default,%s,%s)"
+
+	cursor.execute(sql,(idp,vac))
+
+	return redirect('/')
+
+@app.route('/vacunas/pacientes', methods=["GET","POST"])
 def vacp():
 	cursor = mysql.get_db().cursor()
 
 	if request.method == "GET":
 		idv = request.args.get('id', default = "", type = str)
+
+	if request.method == "POST":
+		idv = request.form['id']
 
 	select = "SELECT v.nombre_enfermedad,p.nombre_paciente,p.rut,r.fechavacuna FROM Vacuna as v, Paciente as p, recibe as r "
 	select += " WHERE r.idvacuna=v.id AND p.id=r.idpaciente AND v.id=%s"
@@ -113,6 +138,31 @@ def vacp():
 
 	return render_template('vacuna.html', vacuna=vacupaci, n=nombre)
 
+@app.route('/pacientes/vacunas', methods=["GET","POST"])
+def pc():
+	cursor = mysql.get_db().cursor()
+
+	if request.method == "GET":
+		idp = request.args.get('id', default = "", type = str)
+
+	if request.method == "POST":
+		idp = request.form['id']
+
+	select = "SELECT v.nombre_enfermedad,r.fechavacuna FROM Vacuna as v,recibe as r"
+	select += " WHERE r.idvacuna = v.id AND r.idpaciente = %s"
+
+	cursor.execute(select,(idp))
+
+	pacivacuna = cursor.fetchall()
+
+	select = "SELECT nombre_paciente FROM Paciente"
+	select += " WHERE id = %s"
+
+	cursor.execute(select,(idp))
+
+	npaci = cursor.fetchall()
+
+	return render_template('vacunapaciente.html', pacvacuna = pacivacuna, n=npaci)
 
 if __name__ == "__main__":
 	app.run(debug=True)
