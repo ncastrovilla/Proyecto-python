@@ -13,13 +13,13 @@
 </head>
 <body>
 	<div class="container">
-    <form class="form-inline" action="/pacientes/add">
-		  <div class="form-group">
-			 <label for="Pacientes">Pacientes</label>	
+    <h2>Pacientes</h2>
+    <form style="float: left;" class="form-inline" action="/pacientes/add">
+		  <div class="form-group">	
 			 <button type="submit" class="btn btn-default">Nuevo</button>
 		  </div>
     </form>
-    <form class="form-inline" action="/vacunas">
+    <form style="float:right;" class="form-inline" action="/vacunas">
         <button type="submit" class="btn btn-default">Vacunas</button>
     </form>
 	<table class="table table-hover" id="myTable">
@@ -37,11 +37,11 @@
           <td>{{ paciente['nombre_paciente'] }}</td>
           <td>{{ paciente['rut'] }}</td>
           <td>{{ paciente['fecha_nacimiento'] }}</td>
-          <td><form action="/pacientes/vacunar" method="post">
+          <td><form style="float: left;" action="/pacientes/vacunar" method="post">
                 <button type="submit" class="btn btn-default">Agregar</button>
                 <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
               </form>
-              <form action="/pacientes/vacunas" method="post">
+              <form style="" action="/pacientes/vacunas" method="post">
                 <button type="submit" class="btn btn-default">Ver</button>
                 <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
               </form>
