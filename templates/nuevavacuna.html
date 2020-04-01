@@ -1,29 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Flask vacunatorio</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  	<script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
-	<div class="container">
-		<br>
-		<h2 align="center">Nueva vacuna</h2>
-		<br>
-		<form action="/vacunas/add" method="post">
-			<div class="form-inline" align="center">
-				<label for="vacuna">Enfermedad</label>
-				<input type="text" name="vacuna">
-			</div><br>
-			<div align="center">
-				<input type="submit" name="guardarv" value="Guardar">
+{% extends "index.html" %}
+{% block title %}{{titulo}}{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+		<form action="/vacunas">
+			<div class="form-inline">
+			  <button type="submit" class="btn btn-success"><i class="fa fa-arrow-left"></i> Atrás</button>
 			</div>
-		</form>
-	</div>
-</body>
-</html>
+		  </form>
+      </div>
+      <!-- /.box-header -->
+
+	  <div class="box box-primary">
+		<div class="box-header with-border">
+		  <h3 class="box-title">Nueva Vacuna</h3>
+		</div>
+		<!-- /.box-header -->
+		<!-- form start -->
+		<form role="form" action="/vacunas/add" method="post">
+			<div class="box-body">
+			  <div class="form-group">
+				<label for="exampleInputEmail1">Enfermedad</label>
+				<input type="text" class="form-control"  name="vacuna" placeholder="Ej. Covid-2000">
+			  </div>
+			</div>
+			<!-- /.box-body -->
+			<div class="box-footer">
+				<button type="submit" class="btn btn-primary" name="guardarv"><i class="fa fa-floppy-o"></i> Guardar</button>
+			</div>
+		  </form>
+	  </div>
+
+
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ import json
 from flask import Flask, render_template, jsonify, request , redirect
 from flaskext.mysql import MySQL
 import pymysql
-import pymysql.cursors
+import pymysql.cursors 
 
 
 app = Flask(__name__)
@@ -14,14 +14,33 @@ mysql = MySQL(app)
 mysql.connect_args["autocommit"] = True 
 mysql.connect_args["cursorclass"] = pymysql.cursors.DictCursor
 
-@app.route('/') 
+@app.route('/')
+def home():
+	cursor = mysql.get_db().cursor()
+
+	cursor.execute("SELECT id FROM Paciente")
+
+	idp = cursor.fetchall()
+
+	a=len(idp)
+
+	n=str(a)
+
+	cursor.execute("SELECT id FROM Vacuna")
+
+	idv = cursor.fetchall()
+
+	m=str(len(idv))
+	return render_template('home.html', num=n, vac=m , titulo="Página Principal")
+
+@app.route('/pacientes') 
 def pacientes():
 	cursor = mysql.get_db().cursor()
 
 	cursor.execute("SELECT * FROM Paciente")
 
 	paciente=cursor.fetchall()
-	return render_template('pacientes.html',pacient = paciente)
+	return render_template('pacientes.html',titulo="Pacientes",pacient = paciente)
 
 @app.route('/pacientes/add', methods=["GET","POST"])
 def padd():
@@ -40,9 +59,9 @@ def padd():
 			cursor.execute(sql,(nombre,run,nac))
 		except Exception as e:
 			print(e)
-		return redirect('/')
+		return redirect('/pacientes')
 
-	return render_template('nuevopaciente.html')
+	return render_template('nuevopaciente.html',titulo="Nuevo Paciente")
 
 @app.route('/vacunas')
 def vacunas():
@@ -50,7 +69,7 @@ def vacunas():
 	cursor.execute("SELECT * FROM Vacuna")
 
 	vacunas=cursor.fetchall()
-	return render_template('vacunas.html',vac = vacunas)
+	return render_template('vacunas.html',titulo="Vacunas",vac = vacunas)
 
 @app.route('/vacunas/add',  methods=["GET","POST"])
 def vadd():
@@ -68,7 +87,7 @@ def vadd():
 		except Exception as e:
 			print(e)
 		return redirect('/vacunas')
-	return render_template('nuevavacuna.html')
+	return render_template('nuevavacuna.html',titulo="Nueva Vacuna")
 
 @app.route('/pacientes/vacunar', methods=["GET","POST"])
 def pvac():
@@ -91,7 +110,7 @@ def pvac():
 
 	vac = cursor.fetchall()
 
-	return render_template('vacunarpaciente.html', vacp= pacivac, vaco=vac)
+	return render_template('vacunarpaciente.html', titulo="Vacunar Paciente",vacp= pacivac, vaco=vac)
 
 @app.route('/pacientes/vacunar/listo', methods=["GET","POST"])
 def pvl():
@@ -110,7 +129,7 @@ def pvl():
 
 	cursor.execute(sql,(idp,vac))
 
-	return redirect('/')
+	return redirect('/pacientes')
 
 @app.route('/vacunas/pacientes', methods=["GET","POST"])
 def vacp():
@@ -136,7 +155,7 @@ def vacp():
 
 	nombre = cursor.fetchall()
 
-	return render_template('vacuna.html', vacuna=vacupaci, n=nombre)
+	return render_template('vacuna.html', titulo="Pacientes con Vacunas",vacuna=vacupaci, n=nombre)
 
 @app.route('/pacientes/vacunas', methods=["GET","POST"])
 def pc():
@@ -162,7 +181,7 @@ def pc():
 
 	npaci = cursor.fetchall()
 
-	return render_template('vacunapaciente.html', pacvacuna = pacivacuna, n=npaci)
+	return render_template('vacunapaciente.html', titulo="Vacunas del Paciente",pacvacuna = pacivacuna, n=npaci)
 
 if __name__ == "__main__":
 	app.run(debug=True)

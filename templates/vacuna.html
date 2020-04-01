@@ -1,37 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Flask vacunatorio</title>
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  	<script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
-	<div class="container">
-		{% for nombre in n %}
-		<h2>Pacientes con {{nombre['nombre_enfermedad']}} </h2>
-		{% endfor %}
-	<table class="table table-hover" id="myTable">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Rut</th>
-        <th>Fech. Vacuna</th>
-      </tr>
-    </thead>
-    <tbody>
-    	{% for vacunas in vacuna %}
-        <tr>
-          <td>{{ vacunas['nombre_paciente'] }}</td>
-          <td>{{ vacunas['rut'] }}</td>
-          <td>{{ vacunas['fechavacuna'] }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>		
-	</div>
-</body>
-</html>
+{% extends "index.html" %}
+{% block title %}{{titulo}}{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <form action="/vacunas">
+          <div class="form-inline">
+            <button type="submit" class="btn btn-success"><i class="fa fa-arrow-left"></i> Atrás</button>
+          </div>
+        </form>
+        <br>
+      </div>
+      <!-- /.box-header -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          {% for nombre in n %}
+          <h3 class="box-title">Pacientes con {{nombre['nombre_enfermedad']}}</h3>
+          {% endfor %}
+        </div>
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover" id="myTable">
+  <thead>
+    <th>Nombre</th>
+    <th>Rut</th>
+    <th>Fecha de Vacuna</th>
+  </thead>
+
+  <tr>
+
+    {% for vacunas in vacuna %}
+    <tr>
+      <td>{{ vacunas['nombre_paciente'] }}</td>
+      <td>{{ vacunas['rut'] }}</td>
+      <td>{{ vacunas['fechavacuna'] }}</td>
+    </tr>
+  </tr>
+  {% endfor %}
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+{% endblock %}

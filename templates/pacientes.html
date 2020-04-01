@@ -1,55 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Pacientes</title>
+{% extends "index.html" %}
+{% block title %}{{titulo}}{% endblock %}
+{% block content %}
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
-	<div class="container">
-    <h2>Pacientes</h2>
-    <form style="float: left;" class="form-inline" action="/pacientes/add">
-		  <div class="form-group">	
-			 <button type="submit" class="btn btn-default">Nuevo</button>
-		  </div>
-    </form>
-    <form style="float:right;" class="form-inline" action="/vacunas">
-        <button type="submit" class="btn btn-default">Vacunas</button>
-    </form>
-	<table class="table table-hover" id="myTable">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Rut</th>
-        <th>Fech. Nac.</th>
-        <th>Vacunas</th>
-      </tr>
-    </thead>
-    <tbody>
-    	{% for paciente in pacient %}
-        <tr>
-          <td>{{ paciente['nombre_paciente'] }}</td>
-          <td>{{ paciente['rut'] }}</td>
-          <td>{{ paciente['fecha_nacimiento'] }}</td>
-          <td><form style="float: left;" action="/pacientes/vacunar" method="post">
-                <button type="submit" class="btn btn-default">Agregar</button>
-                <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
-              </form>
-              <form style="" action="/pacientes/vacunas" method="post">
-                <button type="submit" class="btn btn-default">Ver</button>
-                <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
-              </form>
-          </td>
-        </tr>
-        {% endfor %}
-    </tbody>		
-	</div>
-</body>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <form style="float: left;" class="form-inline" action="/pacientes/add">
+          <div class="form-group">	
+           <button type="submit" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Paciente</button>
+          </div>
+        </form>
+        <br>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover" id="myTable">
+  <thead>
+    <th>Nombre</th> 
+    <th>Rut</th>
+    <th>Fecha Nacimiento</th>
+    <th>Vacunas</th>
+  </thead>
 
-</html>
+  <tr>
+
+    {% for paciente in pacient %}
+
+    <td>{{ paciente['nombre_paciente'] }}</td>
+    <td>{{ paciente['rut'] }}</td>
+    <td>{{ paciente['fecha_nacimiento'] }}</td>
+
+<td>
+  <a><form style="float: left" action="/pacientes/vacunas" method="post">
+    <button type="submit" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button>
+    <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
+  </form>
+</a>
+ <a><form style="" action="/pacientes/vacunar" method="post">
+      <button type="submit" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar</button>
+      <input type="text" name="id" id="id" value="{{paciente['id']}}" hidden>
+  </form>
+</a>
+</td>
+  </tr>
+  {% endfor %}
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+
+{% endblock %}
