@@ -1,3 +1,12 @@
+"""
+Integrantes:
+
+Nicolas Castro
+Javier De La Rosa
+Alfredo Quintana
+
+"""
+
 import requests
 import json
 from flask import Flask, render_template, jsonify, request , redirect
